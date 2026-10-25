@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0f766e">
+<title>بازار مجازی | خرید آسان</title>
+<style>
+:root{--primary:#0f766e;--primary2:#115e59;--bg:#f4f7f8;--card:#fff;--text:#17252b;--muted:#64748b;--line:#e2e8f0;--danger:#b91c1c;--gold:#f59e0b}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Tahoma,Arial,sans-serif;line-height:1.8}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+.topbar{background:#0b3b3a;color:white;padding:8px 16px;text-align:center;font-size:12px}
+header{background:white;position:sticky;top:0;z-index:10;box-shadow:0 2px 12px #0f172a10}
+.head{max-width:1200px;margin:auto;padding:14px 16px;display:flex;gap:14px;align-items:center}
+.logo{display:flex;align-items:center;gap:8px;font-weight:bold;color:var(--primary);font-size:21px;white-space:nowrap}
+.logo-icon{background:var(--primary);color:white;border-radius:12px;padding:4px 9px}
+.search{display:flex;flex:1;min-width:80px}
+.search input{width:100%;border:1px solid var(--line);border-radius:0 10px 10px 0;padding:10px 12px;outline:none;background:#f8fafc}
+.search button{border:0;background:var(--primary);color:white;border-radius:10px 0 0 10px;padding:0 15px}
+.cart-btn,.admin-btn{border:1px solid var(--line);background:white;border-radius:10px;padding:8px 12px;white-space:nowrap}
+.cart-count{background:#dc2626;color:white;border-radius:99px;padding:0 6px;font-size:12px}
+nav{border-top:1px solid var(--line);max-width:1200px;margin:auto;padding:7px 16px;display:flex;gap:8px;overflow:auto}
+nav button{border:0;background:transparent;color:#475569;padding:5px 12px;border-radius:8px;white-space:nowrap}
+nav button.active,nav button:hover{background:#d1fae5;color:#065f46}
+main{max-width:1200px;margin:20px auto;padding:0 16px}
+.hero{background:linear-gradient(120deg,#0f766e,#134e4a);color:white;border-radius:20px;padding:26px;display:flex;align-items:center;justify-content:space-between;gap:20px;overflow:hidden}
+.hero h1{font-size:clamp(24px,4vw,36px);margin:0 0 8px}
+.hero p{margin:0 0 18px;color:#d1fae5}
+.hero .hero-emoji{font-size:76px;filter:drop-shadow(0 8px 12px #0003)}
+.btn{border:0;border-radius:10px;padding:9px 14px;background:var(--primary);color:white}
+.btn:hover{background:var(--primary2)}
+.btn.light{background:white;color:var(--primary)}
+.btn.secondary{background:#e2e8f0;color:#334155}
+.btn.danger{background:#fee2e2;color:#991b1b}
+.btn.small{padding:5px 9px;font-size:13px}
+.section-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:22px 0 12px}
+.section-head h2{font-size:20px;margin:0}
+.muted{color:var(--muted);font-size:13px}
+.categories{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px}
+.cat{border:1px solid var(--line);background:white;border-radius:13px;padding:12px 6px;text-align:center;color:var(--text)}
+.cat span{display:block;font-size:27px}.cat.active{border-color:var(--primary);background:#ecfdf5;color:var(--primary)}
+.toolbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:12px 0}
+.toolbar select{border:1px solid var(--line);background:white;border-radius:9px;padding:8px}
+.products{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.product{background:white;border:1px solid var(--line);border-radius:15px;overflow:hidden;display:flex;flex-direction:column;min-width:0}
+.product-art{height:145px;display:flex;align-items:center;justify-content:center;font-size:58px;background:linear-gradient(135deg,#ecfeff,#f0fdf4);position:relative}
+.product-art img{width:100%;height:100%;object-fit:cover}
+.pill{position:absolute;top:9px;right:9px;background:#fef3c7;color:#92400e;border-radius:7px;padding:1px 7px;font-size:11px}
+.product-body{padding:12px;display:flex;flex-direction:column;flex:1}
+.product h3{font-size:15px;margin:0 0 5px}
+.product-desc{font-size:12px;color:var(--muted);margin:0 0 9px;flex:1}
+.price-row{display:flex;gap:6px;align-items:baseline;flex-wrap:wrap;margin-bottom:10px}
+.price{font-weight:bold;color:var(--primary);font-size:17px}
+.old-price{text-decoration:line-through;color:#94a3b8;font-size:12px}
+.product .btn{width:100%}
+.empty{background:white;border:1px dashed #cbd5e1;border-radius:14px;text-align:center;padding:28px;color:var(--muted);grid-column:1/-1}
+footer{margin-top:35px;background:#102f30;color:#d1fae5;padding:25px 16px}
+.footer-inner{max-width:1200px;margin:auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+footer h3{color:white;margin-top:0}
+footer p{margin:4px 0;font-size:13px}
+.overlay{position:fixed;inset:0;background:#0f172a80;z-index:30;display:none;align-items:stretch;justify-content:flex-start}
+.overlay.show{display:flex}
+.drawer{background:white;width:min(470px,100%);height:100%;overflow:auto;padding:18px}
+.drawer-head{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);padding-bottom:10px}
+.drawer-head h2{margin:0;font-size:20px}
+.close{border:0;background:#f1f5f9;border-radius:8px;padding:5px 11px;font-size:20px}
+.cart-item{display:grid;grid-template-columns:52px 1fr auto;gap:10px;align-items:center;padding:13px 0;border-bottom:1px solid var(--line)}
+.cart-emoji{font-size:30px;background:#f0fdfa;border-radius:10px;text-align:center}
+.cart-item h4{margin:0;font-size:14px}
+.qty{display:flex;align-items:center;gap:9px;margin-top:5px}
+.qty button{border:1px solid var(--line);background:white;border-radius:6px;width:27px;height:27px}
+.cart-total{background:#f8fafc;border-radius:12px;padding:13px;margin:16px 0}
+.total-line{display:flex;justify-content:space-between;margin:4px 0}
+.total-line.final{border-top:1px solid var(--line);padding-top:9px;margin-top:9px;font-weight:bold;font-size:18px}
+.full{width:100%}
+.modal{position:fixed;inset:0;background:#0f172a99;z-index:50;display:none;align-items:center;justify-content:center;padding:15px}
+.modal.show{display:flex}
+.modal-box{background:white;border-radius:16px;width:min(650px,100%);max-height:92vh;overflow:auto;padding:20px}
+.modal-box h2{margin:0 0 14px}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.field{display:flex;flex-direction:column;gap:5px}
+.field.full-field{grid-column:1/-1}
+.field label{font-size:13px;color:#475569}
+.field input,.field select,.field textarea{border:1px solid #cbd5e1;border-radius:9px;padding:10px;width:100%;background:white}
+.field textarea{min-height:80px;resize:vertical}
+.notice{background:#fff7ed;border:1px solid #fed7aa;color:#9a3412;padding:10px;border-radius:10px;font-size:12px;margin:12px 0}
+.admin-list{width:100%;border-collapse:collapse;font-size:13px}
+.admin-list th,.admin-list td{padding:8px;border-bottom:1px solid var(--line);text-align:right}
+.admin-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.admin-tabs button{border:1px solid var(--line);background:white;border-radius:8px;padding:7px 10px}
+.admin-tabs button.active{background:#ccfbf1;border-color:var(--primary)}
+.hidden{display:none!important}
+.toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:#102f30;color:white;padding:10px 16px;border-radius:10px;z-index:100;box-shadow:0 4px 20px #0002;max-width:90%;text-align:center}
+@media(max-width:850px){.products{grid-template-columns:repeat(3,minmax(0,1fr))}.categories{grid-template-columns:repeat(3,minmax(0,1fr))}.hero .hero-emoji{font-size:55px}}
+@media(max-width:560px){.head{flex-wrap:wrap;gap:9px}.logo{font-size:18px}.search{order:3;flex-basis:100%}.admin-btn{margin-right:auto}.hero{padding:20px}.hero .hero-emoji{font-size:43px}.products{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.product-art{height:120px;font-size:48px}.product-body{padding:10px}.product h3{font-size:14px}.price{font-size:15px}.categories{grid-template-columns:repeat(3,minmax(0,1fr))}.form-grid{grid-template-columns:1fr}.field.full-field{grid-column:auto}.section-head h2{font-size:18px}}
+</style>
+</head>
+<body>
+<div class="topbar">به بازار مجازی خوش آمدید | فروشگاه آزمایشی برای نمایش و یادگیری</div>
+<header>
+  <div class="head">
+    <div class="logo"><span class="logo-icon">🛍️</span><span>بازار مجازی</span></div>
+    <form class="search" id="searchForm"><input id="searchInput" type="search" placeholder="نام کالا را جست‌وجو کنید..." aria-label="جست‌وجوی کالا"><button type="submit">جست‌وجو</button></form>
+    <button class="cart-btn" id="openCart">🛒 سبد <span class="cart-count" id="cartCount">۰</span></button>
+    <button class="admin-btn" id="openAdmin">⚙️ مدیریت</button>
+  </div>
+  <nav id="navCats" aria-label="دسته‌بندی محصولات"></nav>
+</header>
+<main>
+  <section class="hero">
+    <div><h1>خرید آسان، انتخاب هوشمند</h1><p>محصولات متنوع را ببینید و سبد خرید خود را بسازید.</p><button class="btn light" id="shopNow">مشاهده محصولات ←</button></div>
+    <div class="hero-emoji" aria-hidden="true">🛒📦</div>
+  </section>
+  <div class="section-head"><h2>دسته‌بندی کالاها</h2><span class="muted">برای فیلتر کالا انتخاب کنید</span></div>
+  <section class="categories" id="categoryCards"></section>
+  <div class="section-head"><h2 id="productHeading">محصولات فروشگاه</h2><span class="muted" id="productCount"></span></div>
+  <div class="toolbar">
+    <label class="muted" for="sortSelect">مرتب‌سازی:</label>
+    <select id="sortSelect"><option value="default">پیش‌فرض</option><option value="low">ارزان‌ترین</option><option value="high">گران‌ترین</option><option value="name">نام کالا</option></select>
+    <button class="btn secondary small" id="clearFilters">پاک کردن فیلترها</button>
+  </div>
+  <section class="products" id="products"></section>
+</main>
+<footer><div class="footer-inner">
+  <div><h3>🛍️ بازار مجازی</h3><p>یک فروشگاه نمونه برای تمرین و توسعه تجارت اینترنتی.</p></div>
+  <div><h3>راهنمای خرید</h3><p>۱. محصول را انتخاب کنید.</p><p>۲. به سبد خرید اضافه کنید.</p><p>۳. سفارش آزمایشی ثبت کنید.</p></div>
+  <div><h3>ارتباط با ما</h3><p>ایمیل: info@example.com (نمونه)</p><p>این نسخه به فروشنده متصل نیست.</p></div>
+</div></footer>
+
+<div class="overlay" id="cartOverlay" role="dialog" aria-modal="true" aria-label="سبد خرید">
+ <div class="drawer">
+  <div class="drawer-head"><h2>🛒 سبد خرید شما</h2><button class="close" id="closeCart" aria-label="بستن">×</button></div>
+  <div id="cartItems"></div>
+  <div id="cartSummary"></div>
+  <button class="btn full" id="checkoutBtn">ادامه و ثبت سفارش آزمایشی</button>
+  <p class="muted">این سفارش فقط در همین مرورگر ثبت می‌شود و به فروشنده ارسال نمی‌گردد.</p>
+ </div>
+</div>
+
+<div class="modal" id="checkoutModal" role="dialog" aria-modal="true">
+ <div class="modal-box">
+  <div class="drawer-head"><h2>ثبت سفارش آزمایشی</h2><button class="close" data-close="checkoutModal">×</button></div>
+  <div class="notice">نسخه آزمایشی است: اطلاعات را واقعی وارد نکنید. این فرم پرداخت اینترنتی ندارد و سفارش به سرور ارسال نمی‌شود.</div>
+  <form id="checkoutForm">
+   <div class="form-grid">
+    <div class="field"><label for="buyerName">نام و نام خانوادگی</label><input id="buyerName" required maxlength="80" autocomplete="name" placeholder="نام نمونه"></div>
+    <div class="field"><label for="buyerPhone">شماره تماس نمونه</label><input id="buyerPhone" required inputmode="tel" maxlength="20" placeholder="مثلاً 09120000000"></div>
+    <div class="field full-field"><label for="buyerAddress">نشانی تحویل</label><textarea id="buyerAddress" required maxlength="300" placeholder="نشانی نمونه"></textarea></div>
+    <div class="field full-field"><label for="buyerNote">توضیحات (اختیاری)</label><input id="buyerNote" maxlength="200" placeholder="توضیحات سفارش"></div>
+   </div>
+   <div id="checkoutTotal" class="cart-total"></div>
+   <button class="btn full" type="submit">ثبت سفارش آزمایشی</button>
+  </form>
+ </div>
+</div>
+
+<div class="modal" id="adminModal" role="dialog" aria-modal="true">
+ <div class="modal-box">
+  <div class="drawer-head"><h2>⚙️ مدیریت فروشگاه</h2><button class="close" data-close="adminModal">×</button></div>
+  <div class="notice">مدیریت در این نسخه بدون رمز و فقط محلی است؛ برای سایت واقعی باید احراز هویت امن سمت سرور پیاده‌سازی شود.</div>
+  <div class="admin-tabs"><button class="active" data-admin-tab="productsTab">مدیریت کالاها</button><button data-admin-tab="ordersTab">سفارش‌های این دستگاه</button><button data-admin-tab="addTab">افزودن کالا</button></div>
+  <div id="productsTab" class="admin-panel"></div>
+  <div id="ordersTab" class="admin-panel hidden"></div>
+  <div id="addTab" class="admin-panel hidden">
+   <form id="productForm">
+    <input type="hidden" id="editProductId">
+    <div class="form-grid">
+     <div class="field"><label for="pName">نام کالا</label><input id="pName" required maxlength="80"></div>
+     <div class="field"><label for="pCategory">دسته‌بندی</label><select id="pCategory" required></select></div>
+     <div class="field"><label for="pPrice">قیمت (تومان)</label><input id="pPrice" required inputmode="numeric" placeholder="مثلاً 250000"></div>
+     <div class="field"><label for="pEmoji">نماد کالا (ایموجی)</label><input id="pEmoji" maxlength="8" placeholder="📦"></div>
+     <div class="field full-field"><label for="pDesc">توضیحات کوتاه</label><textarea id="pDesc" maxlength="200"></textarea></div>
+    </div>
+    <div style="display:flex;gap:8px;margin-top:12px"><button class="btn" type="submit">ذخیره کالا</button><button class="btn secondary" type="button" id="cancelEdit">لغو ویرایش</button></div>
+   </form>
+  </div>
+  <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:18px;border-top:1px solid var(--line);padding-top:14px">
+   <button class="btn secondary small" id="exportData">پشتیبان‌گیری JSON</button>
+   <label class="btn secondary small" for="importFile">بازیابی JSON</label><input class="hidden" type="file" id="importFile" accept=".json,application/json">
+   <button class="btn danger small" id="resetProducts">بازگردانی کالاهای نمونه</button>
+  </div>
+ </div>
+</div>
+<div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
+
+<script>
+"use strict";
+const CATEGORIES = [
+ {id:"all",name:"همه کالاها",emoji:"🛍️"},
+ {id:"digital",name:"دیجیتال",emoji:"📱"},
+ {id:"home",name:"خانه و آشپزخانه",emoji:"🏠"},
+ {id:"fashion",name:"پوشاک",emoji:"👕"},
+ {id:"beauty",name:"زیبایی و سلامت",emoji:"🧴"},
+ {id:"food",name:"خوراکی",emoji:"🍯"},
+ {id:"other",name:"سایر کالاها",emoji:"🎁"}
+];
+const DEFAULT_PRODUCTS = [
+ {id:"p1",name:"هدفون بی‌سیم",category:"digital",price:850000,emoji:"🎧",desc:"هدفون سبک برای موسیقی و تماس",stock:12},
+ {id:"p2",name:"پاوربانک ۱۰هزار",category:"digital",price:720000,emoji:"🔋",desc:"شارژر همراه برای استفاده روزمره",stock:8},
+ {id:"p3",name:"چراغ مطالعه",category:"home",price:390000,emoji:"💡",desc:"چراغ کاربردی برای میز کار و مطالعه",stock:15},
+ {id:"p4",name:"ماگ سرامیکی",category:"home",price:180000,emoji:"☕",desc:"ماگ مناسب نوشیدنی‌های گرم",stock:20},
+ {id:"p5",name:"تی‌شرت ساده",category:"fashion",price:320000,emoji:"👕",desc:"تی‌شرت روزمره با طرح ساده",stock:10},
+ {id:"p6",name:"کوله‌پشتی",category:"fashion",price:690000,emoji:"🎒",desc:"کوله مناسب کار، مدرسه و سفر",stock:7},
+ {id:"p7",name:"کرم مرطوب‌کننده",category:"beauty",price:210000,emoji:"🧴",desc:"محصول نمونه مراقبت از پوست",stock:9},
+ {id:"p8",name:"عسل طبیعی نمونه",category:"food",price:450000,emoji:"🍯",desc:"نمونه نمایشی محصول خوراکی",stock:6},
+ {id:"p9",name:"دفتر یادداشت",category:"other",price:95000,emoji:"📒",desc:"دفتر مناسب یادداشت‌های روزانه",stock:30},
+ {id:"p10",name:"بلندگوی کوچک",category:"digital",price:560000,emoji:"🔊",desc:"بلندگوی قابل‌حمل نمونه",stock:5},
+ {id:"p11",name:"ظرف نگهداری",category:"home",price:145000,emoji:"🥣",desc:"ظرف چندمنظوره برای آشپزخانه",stock:18},
+ {id:"p12",name:"هدیه تزئینی",category:"other",price:250000,emoji:"🎁",desc:"گزینه‌ای برای هدیه دادن",stock:11}
+];
+const STORAGE = {products:"bazaar_products_v1",cart:"bazaar_cart_v1",orders:"bazaar_orders_v1"};
+const $ = id => document.getElementById(id);
+function safeLoad(key,fallback){try{const x=localStorage.getItem(key);return x?JSON.parse(x):fallback}catch(e){return fallback}}
+function save(key,value){try{localStorage.setItem(key,JSON.stringify(value));return true}catch(e){notify("ذخیره‌سازی مرورگر ممکن نیست؛ فضای ذخیره‌سازی را بررسی کنید.");return false}}
+let products = safeLoad(STORAGE.products, DEFAULT_PRODUCTS);
+let cart = safeLoad(STORAGE.cart, {});
+let orders = safeLoad(STORAGE.orders, []);
+let activeCategory="all", searchTerm="", sortMode="default";
+function faNum(n){return new Intl.NumberFormat("fa-IR").format(n)}
+function toman(n){return faNum(n)+" تومان"}
+function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function categoryName(id){return CATEGORIES.find(c=>c.id===id)?.name||"سایر کالاها"}
+function notify(msg){const t=$("toast");t.textContent=msg;t.classList.remove("hidden");clearTimeout(notify.timer);notify.timer=setTimeout(()=>t.classList.add("hidden"),2600)}
+function persist(){save(STORAGE.products,products);save(STORAGE.cart,cart);save(STORAGE.orders,orders)}
+function renderNav(){
+ $("navCats").innerHTML=CATEGORIES.map(c=>`<button data-category="${c.id}" class="${activeCategory===c.id?"active":""}">${c.emoji} ${esc(c.name)}</button>`).join("");
+ $("navCats").querySelectorAll("button").forEach(b=>b.addEventListener("click",()=>setCategory(b.dataset.category)));
+}
+function renderCategoryCards(){
+ $("categoryCards").innerHTML=CATEGORIES.filter(c=>c.id!=="all").map(c=>`<button class="cat ${activeCategory===c.id?"active":""}" data-category="${c.id}"><span>${c.emoji}</span>${esc(c.name)}</button>`).join("");
+ $("categoryCards").querySelectorAll("button").forEach(b=>b.addEventListener("click",()=>setCategory(b.dataset.category)));
+}
+function setCategory(id){activeCategory=id;renderNav();renderCategoryCards();renderProducts();$("productHeading").textContent=id==="all"?"محصولات فروشگاه":categoryName(id)}
+function renderProducts(){
+ let list=products.filter(p=>(activeCategory==="all"||p.category===activeCategory)&&(`${p.name} ${p.desc} ${categoryName(p.category)}`).toLowerCase().includes(searchTerm.toLowerCase()));
+ if(sortMode==="low")list.sort((a,b)=>a.price-b.price);
+ if(sortMode==="high")list.sort((a,b)=>b.price-a.price);
+ if(sortMode==="name")list.sort((a,b)=>a.name.localeCompare(b.name,"fa"));
+ $("productCount").textContent=faNum(list.length)+" کالا";
+ $("products").innerHTML=list.length?list.map(p=>`<article class="product">
+  <div class="product-art">${p.image?`<img src="${esc(p.image)}" alt="${esc(p.name)}" loading="lazy">`:esc(p.emoji||"📦")}${p.badge?`<span class="pill">${esc(p.badge)}</span>`:""}</div>
+  <div class="product-body"><h3>${esc(p.name)}</h3><p class="product-desc">${esc(p.desc||"")}</p>
+  <div class="price-row"><span class="price">${toman(Number(p.price)||0)}</span></div>
+  <button class="btn" data-add="${esc(p.id)}">افزودن به سبد خرید</button></div></article>`).join(""):`<div class="empty">محصولی پیدا نشد. عبارت جست‌وجو یا دسته‌بندی را تغییر دهید.</div>`;
+ $("products").querySelectorAll("[data-add]").forEach(b=>b.addEventListener("click",()=>addToCart(b.dataset.add)));
+}
+function cartEntries(){return Object.entries(cart).map(([id,qty])=>({product:products.find(p=>p.id===id),qty:Number(qty)||0})).filter(x=>x.product&&x.qty>0)}
+function cartCount(){return cartEntries().reduce((n,x)=>n+x.qty,0)}
+function subtotal(){return cartEntries().reduce((n,x)=>n+(Number(x.product.price)||0)*x.qty,0)}
+function shipping(){return subtotal()===0||subtotal()>=2000000?0:65000}
+function total(){return subtotal()+shipping()}
+function addToCart(id){const p=products.find(x=>x.id===id);if(!p)return;cart[id]=(Number(cart[id])||0)+1;persist();renderCart();$("cartCount").textContent=faNum(cartCount());notify("کالا به سبد خرید اضافه شد.")}
+function changeQty(id,delta){if(!cart[id])return;cart[id]+=delta;if(cart[id]<=0)delete cart[id];persist();renderCart()}
+function renderCart(){
+ $("cartCount").textContent=faNum(cartCount());
+ const entries=cartEntries();
+ $("cartItems").innerHTML=entries.length?entries.map(({product:p,qty})=>`<div class="cart-item"><div class="cart-emoji">${esc(p.emoji||"📦")}</div><div><h4>${esc(p.name)}</h4><div class="muted">${toman(p.price)}</div><div class="qty"><button data-q="${esc(p.id)}" data-d="-1" aria-label="کم کردن">−</button><span>${faNum(qty)}</span><button data-q="${esc(p.id)}" data-d="1" aria-label="زیاد کردن">+</button></div></div><button class="btn danger small" data-remove="${esc(p.id)}">حذف</button></div>`).join(""):`<div class="empty" style="margin-top:15px">سبد خرید شما خالی است 🛒</div>`;
+ $("cartItems").querySelectorAll("[data-q]").forEach(b=>b.addEventListener("click",()=>changeQty(b.dataset.q,Number(b.dataset.d))));
+ $("cartItems").querySelectorAll("[data-remove]").forEach(b=>b.addEventListener("click",()=>{delete cart[b.dataset.remove];persist();renderCart()}));
+ $("cartSummary").innerHTML=entries.length?`<div class="cart-total"><div class="total-line"><span>جمع کالاها</span><span>${toman(subtotal())}</span></div><div class="total-line"><span>هزینه ارسال</span><span>${shipping()===0?"رایگان":toman(shipping())}</span></div>${subtotal()>0&&subtotal()<2000000?`<div class="muted">با خرید ${toman(2000000-subtotal())} بیشتر، ارسال رایگان می‌شود.</div>`:""}<div class="total-line final"><span>مبلغ نهایی</span><span>${toman(total())}</span></div></div>`:"";
+ $("checkoutBtn").disabled=!entries.length;$("checkoutBtn").style.opacity=entries.length?"1":".5";
+ $("checkoutTotal").innerHTML=`<div class="total-line"><span>جمع کالاها</span><span>${toman(subtotal())}</span></div><div class="total-line"><span>ارسال</span><span>${shipping()===0?"رایگان":toman(shipping())}</span></div><div class="total-line final"><span>مبلغ نهایی</span><span>${toman(total())}</span></div>`;
+}
+function show(id){$(id).classList.add("show")}
+function hide(id){$(id).classList.remove("show")}
+function openCart(){renderCart();show("cartOverlay")}
+function checkout(){
+ if(!cartEntries().length){notify("سبد خرید خالی است.");return}
+ hide("cartOverlay");renderCart();show("checkoutModal");
+}
+function submitOrder(e){
+ e.preventDefault();
+ if(!cartEntries().length){notify("سبد خرید خالی است.");hide("checkoutModal");return}
+ const order={id:"BM-"+Date.now().toString().slice(-8),date:new Date().toISOString(),buyer:$("buyerName").value.trim(),phone:$("buyerPhone").value.trim(),address:$("buyerAddress").value.trim(),note:$("buyerNote").value.trim(),items:cartEntries().map(x=>({id:x.product.id,name:x.product.name,price:Number(x.product.price),qty:x.qty})),subtotal:subtotal(),shipping:shipping(),total:total(),status:"ثبت آزمایشی"};
+ orders.unshift(order);save(STORAGE.orders,orders);cart={};save(STORAGE.cart,cart);hide("checkoutModal");renderCart();$("checkoutForm").reset();notify("سفارش آزمایشی ثبت شد؛ کد: "+order.id);alert("سفارش آزمایشی ثبت شد.\nکد پیگیری: "+order.id+"\nمبلغ: "+toman(order.total)+"\n\nاین سفارش فقط روی همین دستگاه ذخیره شده و به فروشنده ارسال نشده است.");
+}
+function renderAdminProducts(){
+ $("productsTab").innerHTML=products.length?`<div style="overflow:auto"><table class="admin-list"><thead><tr><th>کالا</th><th>قیمت</th><th>عملیات</th></tr></thead><tbody>${products.map(p=>`<tr><td>${esc(p.emoji||"📦")} ${esc(p.name)}<div class="muted">${esc(categoryName(p.category))}</div></td><td>${toman(Number(p.price)||0)}</td><td><div style="display:flex;gap:5px;flex-wrap:wrap"><button class="btn small" data-edit="${esc(p.id)}">ویرایش</button><button class="btn danger small" data-delete="${esc(p.id)}">حذف</button></div></td></tr>`).join("")}</tbody></table></div>`:`<p class="muted">هنوز کالایی ثبت نشده است.</p>`;
+ $("productsTab").querySelectorAll("[data-edit]").forEach(b=>b.addEventListener("click",()=>editProduct(b.dataset.edit)));
+ $("productsTab").querySelectorAll("[data-delete]").forEach(b=>b.addEventListener("click",()=>deleteProduct(b.dataset.delete)));
+}
+function renderOrders(){
+ $("ordersTab").innerHTML=orders.length?`<div style="overflow:auto"><table class="admin-list"><thead><tr><th>کد / تاریخ</th><th>خریدار</th><th>مبلغ</th><th>عملیات</th></tr></thead><tbody>${orders.map(o=>`<tr><td>${esc(o.id)}<div class="muted">${esc(new Date(o.date).toLocaleDateString("fa-IR"))}</div></td><td>${esc(o.buyer)}<div class="muted">${esc(o.phone)}</div></td><td>${toman(o.total)}</td><td><button class="btn secondary small" data-order="${esc(o.id)}">جزئیات</button></td></tr>`).join("")}</tbody></table></div><p class="muted">این سفارش‌ها فقط در حافظه همین مرورگر ذخیره شده‌اند.</p>`:`<div class="empty">هنوز سفارشی ثبت نشده است.</div>`;
+ $("ordersTab").querySelectorAll("[data-order]").forEach(b=>b.addEventListener("click",()=>{const o=orders.find(x=>x.id===b.dataset.order);if(o)alert(`کد: ${o.id}\nنام: ${o.buyer}\nتماس: ${o.phone}\nنشانی: ${o.address}\nاقلام: ${o.items.map(i=>`${i.name} × ${i.qty}`).join("، ")}\nمبلغ: ${toman(o.total)}\nوضعیت: ${o.status}`)}));
+}
+function fillCategorySelect(selected="other"){$("pCategory").innerHTML=CATEGORIES.filter(c=>c.id!=="all").map(c=>`<option value="${c.id}" ${c.id===selected?"selected":""}>${esc(c.name)}</option>`).join("")}
+function editProduct(id){
+ const p=products.find(x=>x.id===id);if(!p)return;
+ $("editProductId").value=p.id;$("pName").value=p.name;$("pPrice").value=p.price;$("pEmoji").value=p.emoji||"📦";$("pDesc").value=p.desc||"";fillCategorySelect(p.category);
+ document.querySelectorAll("[data-admin-tab]").forEach(b=>b.classList.toggle("active",b.dataset.adminTab==="addTab"));
+ document.querySelectorAll(".admin-panel").forEach(x=>x.classList.toggle("hidden",x.id!=="addTab"));
+}
+function deleteProduct(id){
+ const p=products.find(x=>x.id===id);if(!p)return;
+ if(!confirm(`کالای «${p.name}» حذف شود؟`))return;
+ products=products.filter(x=>x.id!==id);delete cart[id];persist();renderProducts();renderCart();renderAdminProducts();notify("کالا حذف شد.");
+}
+function resetProductForm(){$("productForm").reset();$("editProductId").value="";$("pEmoji").value="📦";fillCategorySelect()}
+function saveProduct(e){
+ e.preventDefault();
+ const name=$("pName").value.trim(),priceText=$("pPrice").value.replace(/[۰-۹٠-٩٬,]/g,ch=>{if(/[۰-۹]/.test(ch))return String("۰۱۲۳۴۵۶۷۸۹".indexOf(ch));if(/[٠-٩]/.test(ch))return String("٠١٢٣٤٥٦٧٨٩".indexOf(ch));return ""});
+ const price=Number(priceText);
+ if(!name||!Number.isSafeInteger(price)||price<0){notify("نام و قیمت معتبر وارد کنید.");return}
+ const id=$("editProductId").value;
+ const item={id:id||"p-"+Date.now(),name,price,category:$("pCategory").value,emoji:$("pEmoji").value.trim()||"📦",desc:$("pDesc").value.trim(),stock:99};
+ if(id){products=products.map(p=>p.id===id?{...p,...item}:p);notify("کالا ویرایش شد.")}else{products.unshift(item);notify("کالای جدید اضافه شد.")}
+ persist();resetProductForm();renderProducts();renderAdminProducts();renderNav();renderCategoryCards();
+ document.querySelectorAll("[data-admin-tab]").forEach(b=>b.classList.toggle("active",b.dataset.adminTab==="productsTab"));
+ document.querySelectorAll(".admin-panel").forEach(x=>x.classList.toggle("hidden",x.id!=="productsTab"));
+}
+function downloadBackup(){
+ const data={version:1,exportedAt:new Date().toISOString(),products,cart,orders};
+ const blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"});
+ const url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="bazaar-majazi-backup.json";a.click();URL.revokeObjectURL(url);notify("فایل پشتیبان آماده شد.");
+}
+function importBackup(e){
+ const file=e.target.files?.[0];if(!file)return;
+ const reader=new FileReader();
+ reader.onload=()=>{try{const d=JSON.parse(reader.result);if(!Array.isArray(d.products)||!Array.isArray(d.orders)||typeof d.cart!=="object")throw new Error("ساختار نامعتبر");
+ if(!confirm("اطلاعات فعلی با اطلاعات فایل جایگزین شود؟"))return;
+ products=d.products;cart=d.cart;orders=d.orders;persist();renderAll();renderAdminProducts();renderOrders();notify("بازیابی انجام شد.");
+ }catch(err){notify("فایل پشتیبان معتبر نیست.")}finally{e.target.value=""}};
+ reader.readAsText(file);
+}
+function renderAll(){renderNav();renderCategoryCards();renderProducts();renderCart()}
+$("searchForm").addEventListener("submit",e=>{e.preventDefault();searchTerm=$("searchInput").value.trim();renderProducts()});
+$("searchInput").addEventListener("input",()=>{searchTerm=$("searchInput").value.trim();renderProducts()});
+$("sortSelect").addEventListener("change",e=>{sortMode=e.target.value;renderProducts()});
+$("clearFilters").addEventListener("click",()=>{$("searchInput").value="";searchTerm="";sortMode="default";activeCategory="all";$("sortSelect").value="default";renderAll();$("productHeading").textContent="محصولات فروشگاه"});
+$("shopNow").addEventListener("click",()=>$("products").scrollIntoView({behavior:"smooth",block:"start"}));
+$("openCart").addEventListener("click",openCart);$("closeCart").addEventListener("click",()=>hide("cartOverlay"));$("cartOverlay").addEventListener("click",e=>{if(e.target===$("cartOverlay"))hide("cartOverlay")});
+$("checkoutBtn").addEventListener("click",checkout);$("checkoutForm").addEventListener("submit",submitOrder);
+$("openAdmin").addEventListener("click",()=>{renderAdminProducts();renderOrders();resetProductForm();show("adminModal")});
+document.querySelectorAll("[data-close]").forEach(b=>b.addEventListener("click",()=>hide(b.dataset.close)));
+document.querySelectorAll(".modal").forEach(m=>m.addEventListener("click",e=>{if(e.target===m)hide(m.id)}));
+document.querySelectorAll("[data-admin-tab]").forEach(b=>b.addEventListener("click",()=>{document.querySelectorAll("[data-admin-tab]").forEach(x=>x.classList.toggle("active",x===b));document.querySelectorAll(".admin-panel").forEach(x=>x.classList.toggle("hidden",x.id!==b.dataset.adminTab));if(b.dataset.adminTab==="addTab")resetProductForm()}));
+$("productForm").addEventListener("submit",saveProduct);$("cancelEdit").addEventListener("click",resetProductForm);
+$("exportData").addEventListener("click",downloadBackup);$("importFile").addEventListener("change",importBackup);
+$("resetProducts").addEventListener("click",()=>{if(confirm("کالاهای نمونه جایگزین فهرست فعلی شوند؟")){products=DEFAULT_PRODUCTS.map(p=>({...p}));persist();renderAll();renderAdminProducts();notify("کالاهای نمونه بازگردانده شدند.")}});
+fillCategorySelect();renderAll();
+</script>
+</body>
+</html>
